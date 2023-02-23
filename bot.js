@@ -1,21 +1,29 @@
 const Telegraf = require('telegraf')
-const TikTokScraper = require('tiktok-scraper')
+const token = '6216248779:AAERKYlQDU-HD7ix6eIZJsN8xBgX4btUiKw'
+const bot = new Telegraf(token)
 
-const bot = new Telegraf(6216248779:AAERKYlQDU-HD7ix6eIZJsN8xBgX4btUiKw)
-
-bot.start((ctx) => ctx.reply('Привет! Отправьте мне ссылку на видео в TikTok.'))
-
-bot.on('text', async (ctx) => {
-  const url = ctx.message.text
-
-  try {
-    const videoMeta = await TikTokScraper.getVideoMeta(url)
-    const videoUrl = videoMeta.collector[0].videoUrl
-
-    ctx.replyWithVideo({ url: videoUrl })
-  } catch (error) {
-    ctx.reply('Произошла ошибка при загрузке видео. Попробуйте еще раз.')
-  }
+// Обработчик команды /start
+bot.start((ctx) => {
+  ctx.reply('Привет! Этот бот поможет создать музыку в жанре phonk.')
 })
 
+// Обработчик команды /create_music
+bot.command('create_music', (ctx) => {
+  // Код для создания музыки в жанре phonk
+  // Используйте Tone.js или Web Audio API, чтобы создать музыку
+
+  // Загрузка готовой музыки на сервер Telegram и ее отправка пользователю
+  ctx.replyWithAudio({ source: 'path/to/music.mp3' })
+})
+
+// Обработчик команды /download_music
+bot.command('download_music', (ctx) => {
+  // Код для скачивания музыки на устройство пользователя
+  // Используйте fs и другие соответствующие модули Node.js для скачивания файла
+
+  // Отправка музыки пользователю
+  ctx.replyWithAudio({ source: 'path/to/music.mp3' })
+})
+
+// Запуск бота
 bot.launch()
